@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/estilo.css">
+    <title>Actividad Ciencias</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Actividad Ciencias</h1>
+        <h3>Para este ejercicio debes seleccionar la estacion activa, una vez seleccionada deberas responder la pregunta para que se puedan activar las demas estaciones. Una vez completadas las estaciones dar click en finalizar.</h3>
+        <div id="containerPreg" class="containerPreg oculto">
+            <p id="preguntaT" class="preguntaT"></p>
+            <div id="opciones" class="opciones"></div>
+        </div>
+        <div style="position: relative;" class="containerDin">
+            <svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <path id= "ruta"
+                 d="M 50 300
+                    C 150 100, 250 500, 350 300
+                    C 450 100, 550 500, 650 300
+                    C 700 200, 740 170, 750 150"
+                stroke="black" stroke-width="10" fill="none" stroke-linecap="round"></path>
+                <g class="estacion1" id="primera">
+                    <circle cx="150" cy="252" r="15" stroke="black" stroke-width="3"></circle>
+                </g>
+                <g class="estacion2Inv" id="segunda">
+                    <circle cx="310" cy="350" r="15" stroke="black" stroke-width="3"></circle>
+                </g>
+                <g class="estacion3Inv" id="tercera">
+                    <circle cx="430" cy="245" r="15" stroke="black" stroke-width="3"></circle>
+                </g>
+                <g class="estacion4Inv" id="cuarta">
+                    <circle cx="600" cy="352" r="15" stroke="black" stroke-width="3"></circle>
+                </g>
+                <g class="estacion5Inv" id="quinta">
+                    <circle cx="750" cy="150" r="15" stroke="black" stroke-width="3"></circle>
+                </g>
+            </svg>
+            <img id="papelera" src="../imagenes/reciclaje.png" class="papelera">
+        </div>
+        <p id="mensaje" class="mensaje oculto"></p>
+
+        <button onclick="finalizar()" class="btnF">Finalizar</button>
+        <a href="../html/index.html"><button class="btnS">Salir</button></a>
+    </div>
+    <script>
+        let preguntas= [
+            {
+                texto: "¿Cual de los siguientes objetos se puede reciclar?", opciones: ["Cascara de platano", "Botellas de plastico", "Comida cocinada"],correcta: "Botellas de plastico"
+            },
+            {
+                texto: "¿Que color identifica el contenedor para papel y carton?", opciones: ["Verde", "Azul", "Amarillo", "Rojo"],correcta: "Azul"
+            },
+            {
+                texto: "¿Que es el reciclaje?", opciones: ["Quemar basura para reducir su volumen", "Enterrar los residuos", "Reutilizar materiales para convertirlos en nuevos productos", "Acumular basura para luego separarla"], correcta: "Reutilizar materiales para convertirlos en nuevos productos"
+            },
+            {
+                texto: "¿Que no deberias depositar en el contenedor amarillo (plasticos y envases)?", opciones: ["Juguetes rotos", "Botellas de plastico", "Latas de refresco", "Tetrabriks"], correcta: "Juguetes rotos" 
+            },
+            {
+                texto: "¿Que representa el simbolo de las tres flechas en forma de triangulo?", opciones: ["Basura organica", "Contenedor de residuos peligrosos", "El proceso de reciclaje", "Contaminacion ambiental"], correcta: "El proceso de reciclaje"
+            }
+        ]
+        let estaciones= ["primera", "segunda", "tercera", "cuarta", "quinta"];
+        let clasesEstaciones= ["estacion1", "estacion2Inv", "estacion3Inv", "estacion4Inv", "estacion5Inv"];
+        let clasesImg= ["papelera","papelera1", "papelera2", "papelera3", "papelera4", "papelera5", "papelera6"];
+        // let desplazamiento= [
+        //     {x: 150, y:220},
+        //     {x: 310, y:318},
+        //     {x: 480, y: 250},
+        //     {x: 650, y:270},
+        //     {x: 750, y: 120}
+        // ]
+
+        let path= document.getElementById("ruta");
+        let papelera= document.getElementById("papelera");
+        let pathLtud= path.getTotalLength();
+        let cantResp=0;
+        let correcta= 0;
+        let incorrecta= 0;
+        let mensaje= document.getElementById("mensaje");
+        let estacionActual= 0;
+
+        estaciones.forEach((id, i) => {
+            const el= document.getElementById(id);
+            el.setAttribute("role", "button");
+            el.addEventListener('click', () => {
+                if(i !== estacionActual) return;
+                const preg= preguntas[i];
+                document.getElementById("containerPreg").classList.remove("oculto");
+                document.getElementById("preguntaT").innerText= preg.texto;
+
+                const cOpciones= document.getElementById("opciones");
+                cOpciones.innerHTML= "";
+
+                preg.opciones.forEach((opcion) => {
+                    const btnOp= document.createElement("button");
+                    btnOp.innerText= opcion;
+                    btnOp.classList.add("btnOpciones");
+
+                    btnOp.onclick= ()=> {
+                        if(document.getElementById("containerPreg").classList.contains("oculto")) return;
+                        let clase= clasesEstaciones[i];
+
+                        if(opcion === preg.correcta){
+                            const estacionEl= document.getElementById(estaciones[i]);
+                            correcta++;
+                            estacionEl.classList.add("respFinal");
+                            // document.getElementById("containerPreg").classList.add("oculto");
+                            document.getElementById("mensaje").classList.remove("oculto");
+                            mensaje.textContent= "Respuesta correcta";
+                            mensaje.style.backgroundColor= "green";
+                        }else{
+                            const estacionEl= document.getElementById(estaciones[i]);
+                            incorrecta++;
+                            estacionEl.classList.add("respFinal");
+                            document.getElementById("mensaje").classList.remove("oculto");
+                            mensaje.textContent= "Respuesta incorrecta";
+                            mensaje.style.backgroundColor= "red";
+                        }
+
+                        document.getElementById("containerPreg").classList.add("oculto");
+
+                        const claseImgAct= clasesImg[cantResp];
+                        const claseImgSig= clasesImg[cantResp + 1];
+                            
+                        if(claseImgSig){
+                            papelera.classList.remove(claseImgAct);
+                            papelera.classList.add(claseImgSig);
+                        }
+
+                        if(cantResp + 1 < estaciones.length){
+                            const estacionSig= estaciones[cantResp + 1];
+                            const claseEstacionInvSig= clasesEstaciones[cantResp + 1];
+                            const claseEstacionSig= claseEstacionInvSig.replace("Inv", "");
+                            
+                            document.getElementById(estacionSig).classList.remove(claseEstacionInvSig);
+                            document.getElementById(estacionSig).classList.add(claseEstacionSig);
+
+                        }
+                        cantResp++;
+                        estacionActual++;
+                    }
+                    cOpciones.appendChild(btnOp);
+                })
+
+            })
+        })
+        
+        function moverPapelera(){
+            const punto= path.getPointLength(progreso* pathLtud);
+            papelera.style.left= punto.x + "px";
+            papelera.style.top= punto.y + "px";
+        }
+
+        function finalizar(){
+            alert("Felicitaciones, has terminado!\n\nTus respuestas: \n\n"+correcta+" correctas.\n"+incorrecta+" incorrectas.");
+            window.location.href= 'index.html';
+        }
+    </script>
+</body>
+</html>  
