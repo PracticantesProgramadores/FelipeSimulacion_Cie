@@ -72,40 +72,40 @@ h3{
     border: 4px solid;
 }
 .papelera{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    transform: translate(-860px, 260px);
+    transform: translate(-615px, 180px);
 }
 .papelera1{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    transform: translate(-710px, 130px);
+    transform: translate(-510px, 75px);
 }
 .papelera2{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    transform: translate(-570px, 220px);
+    transform: translate(-425px, 135px);
 }
 .papelera3{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    transform: translate(-420px, 125px);
+    transform: translate(-320px, 70px);
 }
 .papelera4{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    transform: translate(-273px, 228px);
+    transform: translate(-220px, 132px);
 }
 .papelera5{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    transform: translate(-30px, 60px);
+    transform: translate(-75px, 10px);
 }
 
 .estacion1{ 
